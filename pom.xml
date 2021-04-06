@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>ch00-local-cache</module>
         <module>ch01-jedis-client</module>
         <module>ch02-redisson-client</module>
     </modules>
