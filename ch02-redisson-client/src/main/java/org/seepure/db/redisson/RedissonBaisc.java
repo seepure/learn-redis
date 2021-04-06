@@ -11,15 +11,22 @@ public class RedissonBaisc {
     public static void main(String[] args) {
         if (args == null || args.length < 2) {
             System.err.println("usage : get/set key value");
-            System.exit(1);
+            //System.exit(1);
+            args = new String[] {"get", "key1"};
+            //args = new String[] {"set", "key1", "shengshashou"};
         }
         Config config = new Config();
-        config.setTransportMode(TransportMode.NIO);
-        config.setCodec(StringCodec.INSTANCE);
-        config.useClusterServers()
-                .setPassword("222:datahubtest")
-                .setScanInterval(2000)
-                .addNodeAddress("redis://100.66.1.156:12002", "redis://10.121.98.2:12002", "redis://10.121.98.72:12002");
+        //config.setTransportMode(TransportMode.NIO);
+        //config.setCodec(StringCodec.INSTANCE);
+//        config.useClusterServers()
+//                .setPassword("5+0u%acwzSzzRTmsF")
+//                .addNodeAddress("redis://9.44.27.195:9006", "redis://9.44.22.114:9006");
+
+//        config.useSingleServer()
+//                .setPassword("datahub")
+//                .setAddress("redis://9.134.237.132:30379");
+
+        config.useSentinelServers().addSentinelAddress("redis://100.115.157.205:12002", "redis://9.4.5.212:12002");
 
         RedissonClient redisson = Redisson.create(config);
         String mode = args[0];
