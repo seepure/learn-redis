@@ -3,9 +3,7 @@ package org.seepure.db.redisson;
 import org.redisson.Redisson;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
-import org.redisson.client.codec.StringCodec;
 import org.redisson.config.Config;
-import org.redisson.config.TransportMode;
 
 public class RedissonBaisc {
     public static void main(String[] args) {
@@ -22,11 +20,11 @@ public class RedissonBaisc {
 //                .setPassword("5+0u%acwzSzzRTmsF")
 //                .addNodeAddress("redis://9.44.27.195:9006", "redis://9.44.22.114:9006");
 
-//        config.useSingleServer()
-//                .setPassword("datahub")
-//                .setAddress("redis://9.134.237.132:30379");
+        config.useSingleServer()
+                .setPassword("222:datahubtest")
+                .setAddress("redis://100.66.1.156:12002");
 
-        config.useSentinelServers().addSentinelAddress("redis://100.115.157.205:12002", "redis://9.4.5.212:12002");
+        //config.useSentinelServers().addSentinelAddress("redis://100.115.157.205:12002", "redis://9.4.5.212:12002");
 
         RedissonClient redisson = Redisson.create(config);
         String mode = args[0];
