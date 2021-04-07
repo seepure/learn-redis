@@ -18,13 +18,13 @@ public class RedissonBaisc {
         //config.setCodec(StringCodec.INSTANCE);
 //        config.useClusterServers()
 //                .setPassword("5+0u%acwzSzzRTmsF")
-//                .addNodeAddress("redis://9.44.27.195:9006", "redis://9.44.22.114:9006");
+//                .addNodeAddress("redis://xxx:9006", "redis://xxx:9006");
 
         config.useSingleServer()
                 .setPassword("222:datahubtest")
-                .setAddress("redis://100.66.1.156:12002");
+                .setAddress("redis://xxx:12002");
 
-        //config.useSentinelServers().addSentinelAddress("redis://100.115.157.205:12002", "redis://9.4.5.212:12002");
+        //config.useSentinelServers().addSentinelAddress("redis://xxx:12002", "redis://xxx:12002");
 
         RedissonClient redisson = Redisson.create(config);
         String mode = args[0];
