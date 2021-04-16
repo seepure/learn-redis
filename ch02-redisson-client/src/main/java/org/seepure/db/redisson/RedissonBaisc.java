@@ -7,6 +7,7 @@ import org.redisson.client.codec.StringCodec;
 import org.redisson.config.Config;
 
 public class RedissonBaisc {
+
     public static void main(String[] args) {
         if (args == null || args.length < 2) {
             System.err.println("usage : get/set key value");
