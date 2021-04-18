@@ -25,7 +25,8 @@ public class RedissonBatchOrder {
 
     public static void main(String[] args) {
         String arg = args != null && args.length >= 1 ? args[0] :
-                "redis.mode=cluster;redis.nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.136:7000,redis://192.168.234.136:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
+                //"redis.mode=cluster;redis.nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.136:7000,redis://192.168.234.136:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
+                "redis.mode=cluster;redis.nodes=redis://192.168.213.128:7000,redis://192.168.213.128:7001,redis://192.168.213.129:7000,redis://192.168.213.129:7001,redis://192.168.213.130:7000,redis://192.168.213.130:7001";
         Map<String, String> configMap = getArgMapFromArgs(arg);
 
         Config config = buildRedissonConfig(configMap);
@@ -33,7 +34,7 @@ public class RedissonBatchOrder {
         String prefix = configMap.getOrDefault("prefix", "kk_");
         RedissonClient client = Redisson.create(config);
 
-        //batchSet(client, prefix, batchSize);
+        batchSet(client, prefix, batchSize);
         batchGet(client, prefix, batchSize);
 
         client.shutdown();
