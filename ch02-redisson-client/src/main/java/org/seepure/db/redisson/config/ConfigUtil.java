@@ -31,9 +31,18 @@ public class ConfigUtil {
     }
 
     public static Config buildRedissonConfig(Map<String, String> configMap) {
-        String mode = configMap.getOrDefault("mode", "").toLowerCase();
-        String nodes = configMap.getOrDefault("nodes", "redis://192.168.234.137:6379");
-        String password = configMap.get("auth");
+        String mode = configMap.get("redis.mode");
+        if (StringUtils.isBlank(mode)) {
+            mode = configMap.getOrDefault("mode", "").toLowerCase();
+        }
+        String nodes = configMap.get("redis.nodes");
+        if (StringUtils.isBlank(nodes)) {
+            nodes = configMap.get("nodes");
+        }
+        String password = configMap.get("redis.auth");
+        if (password == null) {
+            password = configMap.get("auth");
+        }
         Config config = new Config();
         config.setCodec(StringCodec.INSTANCE);
         switch (mode) {
