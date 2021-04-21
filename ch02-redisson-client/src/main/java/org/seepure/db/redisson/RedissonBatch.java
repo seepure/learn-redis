@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import org.redisson.Redisson;
 import org.redisson.api.BatchResult;
 import org.redisson.api.RBatch;
@@ -19,7 +20,7 @@ public class RedissonBatch {
 
     public static void main(String[] args) {
         String arg = args != null && args.length >= 1 ? args[0]
-                : "redis.mode=cluster;redis.nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.138:7000,redis://192.168.234.138:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
+                : "mode=cluster;nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.138:7000,redis://192.168.234.138:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
         Map<String, String> configMap = ConfigUtil.getArgMapFromArgs(arg);
 
         Config config = ConfigUtil.buildRedissonConfig(configMap);
@@ -27,7 +28,7 @@ public class RedissonBatch {
         String prefix = configMap.getOrDefault("prefix", "kk_");
         RedissonClient client = Redisson.create(config);
 
-        //batchSet(client, prefix, batchSize);
+        batchSet(client, prefix, batchSize);
         batchGet(client, prefix, batchSize);
 
         client.shutdown();
@@ -36,7 +37,7 @@ public class RedissonBatch {
     private static void batchSet(RedissonClient client, String prefix, int batchSize) {
         RBatch batch = client.createBatch();
         for (int i = 0; i < batchSize; i++) {
-            batch.getBucket(prefix + i).setAsync(i);
+            batch.getBucket(prefix + i).setAsync(i, 100, TimeUnit.SECONDS);
         }
         batch.execute();
     }

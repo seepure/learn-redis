@@ -20,8 +20,8 @@ public class RedissonBatchOrder {
 
     public static void main(String[] args) {
         String arg = args != null && args.length >= 1 ? args[0] :
-                //"redis.mode=cluster;redis.nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.138:7000,redis://192.168.234.138:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
-                "redis.mode=cluster;redis.nodes=redis://192.168.213.128:7000,redis://192.168.213.128:7001,redis://192.168.213.129:7000,redis://192.168.213.129:7001,redis://192.168.213.130:7000,redis://192.168.213.130:7001";
+                "mode=cluster;nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.138:7000,redis://192.168.234.138:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
+                //"mode=cluster;nodes=redis://192.168.213.128:7000,redis://192.168.213.128:7001,redis://192.168.213.129:7000,redis://192.168.213.129:7001,redis://192.168.213.130:7000,redis://192.168.213.130:7001";
         Map<String, String> configMap = ConfigUtil.getArgMapFromArgs(arg);
 
         Config config = ConfigUtil.buildRedissonConfig(configMap);
@@ -38,7 +38,7 @@ public class RedissonBatchOrder {
     private static void batchSet(RedissonClient client, String prefix, int batchSize) {
         RBatch batch = client.createBatch();
         for (int i = 0; i < batchSize; i++) {
-            batch.getBucket(prefix + i).setAsync(i, 900, TimeUnit.SECONDS);
+            batch.getBucket(prefix + i).setAsync(i, 120, TimeUnit.SECONDS);
         }
         batch.execute();
     }

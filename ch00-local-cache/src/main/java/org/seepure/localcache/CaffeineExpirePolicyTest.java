@@ -19,9 +19,9 @@ public class CaffeineExpirePolicyTest {
     private static final ConcurrentHashMap<String, String> DB = new ConcurrentHashMap<>();
 
     public static void main(String[] args) throws InterruptedException {
-        Cache<String, String> cache = Caffeine.newBuilder().maximumSize(20)
+        Cache<String, String> cache = Caffeine.newBuilder().maximumSize(16)
                 .expireAfterWrite(20, TimeUnit.SECONDS)
-                .refreshAfterWrite(10, TimeUnit.SECONDS)
+                //.refreshAfterWrite(10, TimeUnit.SECONDS)
                 .build(new CacheLoader<String, String>() {
                     @Nullable
                     @Override
@@ -29,7 +29,7 @@ public class CaffeineExpirePolicyTest {
                         return queryDB(s);
                     }
                 });
-        int bound = 10;
+        int bound = 20;
         int interval = 10_000;
         UpdateHandler updateHandler = new UpdateHandler(bound, interval * 6);
         JoinHandler joinHandler = new JoinHandler(cache, bound, interval);
