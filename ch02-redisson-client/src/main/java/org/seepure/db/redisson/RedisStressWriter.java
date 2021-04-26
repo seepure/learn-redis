@@ -21,12 +21,12 @@ public class RedisStressWriter {
 
     public static void main(String[] args) {
         String arg = args != null && args.length >= 1 ? args[0] :
-                //"mode=cluster;nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.138:7000,redis://192.168.234.138:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
-        "mode=cluster;nodes=redis://192.168.213.128:7000,redis://192.168.213.128:7001,redis://192.168.213.129:7000,redis://192.168.213.129:7001,redis://192.168.213.130:7000,redis://192.168.213.130:7001";
+                "mode=cluster;nodes=redis://192.168.234.137:7000,redis://192.168.234.137:7001,redis://192.168.234.138:7000,redis://192.168.234.138:7001,redis://192.168.234.134:7000,redis://192.168.234.134:7001";
+        //"mode=cluster;nodes=redis://192.168.213.128:7000,redis://192.168.213.128:7001,redis://192.168.213.129:7000,redis://192.168.213.129:7001,redis://192.168.213.130:7000,redis://192.168.213.130:7001";
         Map<String, String> configMap = ConfigUtil.getArgMapFromArgs(arg);
         int bound = 100_000;
-        int interval = 10;
-        int threadNum = 6;
+        int interval = 5;
+        int threadNum = 4;
         Config config = ConfigUtil.buildRedissonConfig(configMap);
         RedissonClient client = Redisson.create(config);
         ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
@@ -76,11 +76,11 @@ public class RedisStressWriter {
         private int genNum(Random random, int bound) {
             int num = -1;
             int classNum = random.nextInt(100);
-            if (classNum < 20) {
+            if (classNum < 25) {
                 num = random.nextInt(bound / 100);
             } else if (classNum < 40) {
                 num = random.nextInt(bound * 5 / 100);
-            } else if (classNum < 60) {
+            } else if (classNum < 65) {
                 num = random.nextInt(bound / 10);
             } else if (classNum < 90) {
                 num = bound / 10 + random.nextInt(bound * 2 / 10);
